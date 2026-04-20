@@ -14,7 +14,10 @@
   "dependencies": {
     "@types/express": "^5.0.6",
     "express": "^5.2.1",
+    "knex": "^3.2.9",
     "nodemon": "^3.1.14",
+    "objection": "^3.1.5",
+    "pg": "^8.20.0",
     "ts-node": "^10.9.2",
     "typescript": "^6.0.2"
   }
