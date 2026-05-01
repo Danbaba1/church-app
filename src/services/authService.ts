@@ -35,4 +35,17 @@ export default class AuthService {
         });
     };
 
+    static async login(email: string, password: string): Promise<{ user: UserAccount; token: string }> {
+        const user = await UserAccount.query().findOne({ email }).withGraphFetched('church');
+        if (!user) {
+            throw new Error('Invalid email');
+        }
+        const isPasswordValid = await bcrypt.compare(password, user.passwordHash);
+        if (!isPasswordValid) {
+            throw new Error('Invalid password');
+        }
+        const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET || 'defaultsecret', { expiresIn: process.env.JWT_EXPIRES_IN || '1h' } as any);
+        return { user, token };
+    }
+
 }

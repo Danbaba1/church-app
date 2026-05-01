@@ -11,4 +11,14 @@ export default class AuthController {
             res.status(400).json({ error: error.message });
         }
     }
+
+    static async login(req: Request, res: Response): Promise<void> {
+        const { email, password } = req.body;
+        try {
+            const { user, token } = await AuthService.login(email, password);
+            res.status(200).json({ message: 'Login successful', userDetails: user, token });
+        } catch (error: any) {
+            res.status(400).json({ error: error.message });
+        }
+    }
 }
