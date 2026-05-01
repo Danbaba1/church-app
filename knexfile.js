@@ -4,6 +4,7 @@
  * @type { Object.<string, import("knex").Knex.Config> }
  */
 require('dotenv').config();
+const { knexSnakeCaseMappers } = require('objection');
 
 module.exports = {
 
@@ -21,7 +22,8 @@ module.exports = {
     },
     seeds: {
       directory: './seeds'
-    }
+    },
+    ...knexSnakeCaseMappers()
   },
 
   staging: {
@@ -55,5 +57,4 @@ module.exports = {
       tableName: 'knex_migrations'
     }
   }
-
 };

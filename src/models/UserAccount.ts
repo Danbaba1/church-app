@@ -1,4 +1,4 @@
-import { Model } from 'objection';
+import { Model, Pojo } from 'objection';
 import ChurchAccount from './ChurchAccount';
 
 export default class UserAccount extends Model {
@@ -18,12 +18,18 @@ export default class UserAccount extends Model {
 
     static tableName = 'user_accounts';
 
+    $formatJson(json: Pojo): Pojo {
+        json = super.$formatJson(json);
+        delete json.passwordHash;
+        return json;
+    }
+
     static relationMappings = () => ({
         church: {
             relation: Model.BelongsToOneRelation,
             modelClass: ChurchAccount,
             join: {
-                from: 'user_accounts.church_id',
+                from: 'user_accounts.churchId',
                 to: 'church_account.id'
             }
         }
